@@ -52,5 +52,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, null)(ChatContent);
-
-// Add latest message to chatContent after message sent
