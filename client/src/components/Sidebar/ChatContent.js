@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,14 +40,4 @@ const ChatContent = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  if (state.activeConversation) {
-    const messages = state.conversations.find(convo => convo.otherUser.username === state.activeConversation);
-    return {
-      latestMessageText: messages.latestMessageText
-    };
-  };
-  return {};
-};
-
-export default connect(mapStateToProps, null)(ChatContent);
+export default ChatContent;
