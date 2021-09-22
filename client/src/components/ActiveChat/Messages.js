@@ -2,7 +2,6 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import moment from "moment";
-import { connect } from "react-redux";
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
@@ -26,11 +25,4 @@ const Messages = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const currentConvoMessages = [...state.conversations.find((conversation) => conversation.otherUser.username === state.activeConversation).messages]
-  return {
-    messages: currentConvoMessages
-  };
-};
-
-export default connect(mapStateToProps, null)(Messages);
+export default Messages;
