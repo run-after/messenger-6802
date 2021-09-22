@@ -7,11 +7,13 @@ import { connect } from "react-redux";
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
 
+  const orderedMessages = messages.sort((a, b) => {
+    return new Date(a.createdAt) - new Date(b.createdAt)
+  });
+
   return (
     <Box>
-      {messages.sort((a, b) => {
-        return new Date(a.createdAt) - new Date(b.createdAt)
-      }).map((message) => {
+      {orderedMessages.map((message) => {
         const time = moment(message.createdAt).format("h:mm");
 
         return message.senderId === userId ? (
