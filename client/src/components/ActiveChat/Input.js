@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
 import FilterNoneOutlinedIcon from '@material-ui/icons/FilterNoneOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -94,6 +95,15 @@ const Input = (props) => {
     textInput.current.click();
   };
 
+  const removeImg = (index) => {
+    const tempFilesPreview = [...filesPreview];
+    const tempFiles = [...files];
+    tempFilesPreview.splice(index, 1);
+    tempFiles.splice(index, 1);
+    setFilesPreview(tempFilesPreview);
+    setFiles(tempFiles);
+  }
+
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
@@ -101,8 +111,9 @@ const Input = (props) => {
           filesPreview.length > 0 &&
           <Grid className={classes.imgPreview}>
             {
-              filesPreview.map((file) => (
+              filesPreview.map((file, index) => (
                 <Box key={file} className={classes.imgContainer}>
+                  <button type='button' className={classes.removeImgBtn} onClick={() => removeImg(index)}><DeleteForeverOutlinedIcon /></button>
                   <img src={file} alt={file.name} className={classes.img} />
                 </Box>
               ))
