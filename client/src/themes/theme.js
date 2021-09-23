@@ -7,8 +7,10 @@ export const theme = createMuiTheme({
     button: {
       textTransform: "none",
       letterSpacing: 0,
-      fontWeight: "bold"
-    }
+      fontWeight: "bold",
+      fontFamily: 'Montserrat, sans-serif',
+    },
+    color: "#3A8DFF"
   },
   overrides: {
     MuiInput: {
