@@ -31,9 +31,12 @@ const useStyles = makeStyles(() => ({
 const Input = (props) => {
 
   const fileInput = useRef(null);
+  const textInput = useRef(null);
 
   const classes = useStyles();
   const [text, setText] = useState("");
+  const [filesPreview, setFilesPreview] = useState([]);
+  const [files, setFiles] = useState([]);
   const { postMessage, otherUser, conversationId, user } = props;
 
   const handleChange = (event) => {
@@ -54,7 +57,19 @@ const Input = (props) => {
   };
 
   const handleAttach = (e) => {
-    
+    // This is the preview images
+    const tempPreview = [...filesPreview];
+    tempPreview.push(URL.createObjectURL(e.target.files[0]));
+    setFilesPreview(tempPreview);
+
+    // Actual files to upload
+    const tempFiles = [...files];
+    tempFiles.push(e.target.files[0]);
+    setFiles(tempFiles);
+    textInput.current.click();
+
+    console.log('files', files)
+    console.log('filesPreview', filesPreview);
   };
 
   return (
@@ -69,6 +84,7 @@ const Input = (props) => {
               value={text}
               name="text"
               onChange={handleChange}
+              ref={textInput}
             />
           </Grid>
           <Grid item xs={1}>
