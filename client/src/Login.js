@@ -133,8 +133,8 @@ const Login = (props) => {
               </FormControl>
               <FormControl margin="normal" required>
                 <TextField
-                  label="password"
-                  aria-label="password"
+                  label="Password"
+                  aria-label="Password"
                   type="password"
                   name="password"
                 />
