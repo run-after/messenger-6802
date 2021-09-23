@@ -51,9 +51,12 @@ const SenderBubble = (props) => {
           ))}
         </Box>
       }
-      <Box className={classes.bubble}>
-        <Typography className={classes.text}>{text}</Typography>
-      </Box>
+      {
+        text &&
+        <Box className={classes.bubble}>
+          <Typography className={classes.text}>{text}</Typography>
+        </Box>
+      }
     </Box>
   );
 };
