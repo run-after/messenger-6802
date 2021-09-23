@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { FormControl, FilledInput, Grid, Button } from "@material-ui/core";
+import { FormControl, FilledInput, Grid, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
@@ -25,6 +25,31 @@ const useStyles = makeStyles(() => ({
     '&:hover': {
       background: '#bdbdbd'
     }
+  },
+  imgPreview: {
+    background: '#F4F6FA',
+    padding: '10px 10px 0 10px',
+    borderRadius: '8px 8px 0 0'
+  },
+  imgContainer: {
+    position: 'relative',
+    display: 'inline-block',
+    padding: '25px 10px 0 0'
+  },
+  removeImgBtn: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    background: 'none',
+    border: 'none',
+    '&:hover': {
+      cursor: 'pointer',
+      opacity: '0.5'
+    }
+  },
+  img: {
+    height: '100px',
+    borderRadius: 5,
   }
 }));
 
@@ -67,14 +92,23 @@ const Input = (props) => {
     tempFiles.push(e.target.files[0]);
     setFiles(tempFiles);
     textInput.current.click();
-
-    console.log('files', files)
-    console.log('filesPreview', filesPreview);
   };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
+        {
+          filesPreview.length > 0 &&
+          <Grid className={classes.imgPreview}>
+            {
+              filesPreview.map((file) => (
+                <Box key={file} className={classes.imgContainer}>
+                  <img src={file} alt={file.name} className={classes.img} />
+                </Box>
+              ))
+            }
+          </Grid>
+        }
         <Grid container justifyContent='center'>
           <Grid item xs={11}>
             <FilledInput
