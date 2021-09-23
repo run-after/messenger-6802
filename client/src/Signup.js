@@ -120,7 +120,7 @@ const Login = (props) => {
       <Grid container item xs={12} sm={8}>
         {/* TOP REGISTER SECTION */}
         <Grid container item justifyContent='flex-end' alignItems='center'>
-          <Typography className={classes.loginText} variant='body2'>Need to log in?</Typography>
+          <Typography className={classes.loginText} variant='body2'>Already have an account?</Typography>
           <Button className={classes.loginBtn} onClick={() => history.push("/login")}>Login</Button>
         </Grid>
         {/* FORM SECTION */}
