@@ -1,30 +1,18 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Typography,
   Button,
   FormControl,
-  TextField,
+  TextField
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 import Aside from './components/Aside';
+import LinkToAuthSection from './components/LinkToAuthSection';
 
 const useStyles = makeStyles((theme) => ({
-  registerText: {
-    opacity: '0.5',
-    margin: '10px 20px'
-  },
-  registerBtn: {
-    color: '#3A8DFF',
-    boxShadow: '0px 0px 10px lightgray',
-    margin: '10px 50px 10px 20px',
-    height: '50px',
-    padding: '20px 40px',
-    fontFamily: 'Montserrat, sans-serif'
-  },
   formContainer: {
     height: '75%'
   },
@@ -34,21 +22,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   loginBtn: {
-    background: '#3A8DFF',
-    color: 'white',
-    margin: '20px',
-    padding: '10px 50px',
-    '&:hover': {
-      background: '#003b75'
-    },
-    fontFamily: 'Montserrat, sans-serif'
+    margin: theme.spacing(3),
+    padding: theme.spacing(1, 5)
   }
   }));
 
 const Login = (props) => {
   const classes = useStyles();
-
-  const history = useHistory();
   const { user, login } = props;
 
   const handleLogin = async (event) => {
@@ -65,15 +45,12 @@ const Login = (props) => {
 
   return (
     <Grid container>
-      {/* ASIDE */}
       <Aside />
       {/* MAIN */}
       <Grid container item xs={12} sm={8}>
-        {/* TOP REGISTER SECTION */}
-        <Grid container item justifyContent='flex-end' alignItems='center'>
-          <Typography className={classes.registerText} variant='body2'>Need to register?</Typography>
-          <Button className={classes.registerBtn} onClick={() => history.push("/register")}>Register</Button>
-        </Grid>
+
+        <LinkToAuthSection path='register' />
+
         {/* FORM SECTION */}
         <Grid
           container
@@ -98,7 +75,7 @@ const Login = (props) => {
                   name="password"
                 />
               </FormControl>
-              <Button type="submit" variant="contained" size="large" className={classes.loginBtn}>
+              <Button color='primary' type="submit" variant="contained" size="large" className={classes.loginBtn}>
                 Login
               </Button>
             </form>

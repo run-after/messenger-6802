@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Typography,
   Button,
   FormControl,
   TextField,
@@ -12,20 +11,9 @@ import {
 import { register } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
 import Aside from "./components/Aside";
+import LinkToAuthSection from "./components/LinkToAuthSection";
 
 const useStyles = makeStyles((theme) => ({
-  loginText: {
-    opacity: '0.5',
-    margin: '10px 20px'
-  },
-  loginBtn: {
-    color: '#3A8DFF',
-    boxShadow: '0px 0px 10px lightgray',
-    margin: '10px 50px 10px 20px',
-    height: '50px',
-    padding: '20px 40px',
-    fontFamily: 'Montserrat, sans-serif'
-  },
   formContainer: {
     height: '75%'
   },
@@ -35,21 +23,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   createBtn: {
-    background: '#3A8DFF',
-    color: 'white',
-    margin: '20px',
-    padding: '10px 50px',
-    '&:hover': {
-      background: '#003b75'
-    },
-    fontFamily: 'Montserrat, sans-serif'
+    margin: theme.spacing(3),
+    padding: theme.spacing(1, 5)
   }
   }));
 
-const Login = (props) => {
+const Signup = (props) => {
   const classes = useStyles();
-
-  const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
@@ -74,15 +54,10 @@ const Login = (props) => {
 
   return (
     <Grid container>
-      {/* ASIDE */}
       <Aside />
       {/* MAIN */}
       <Grid container item xs={12} sm={8}>
-        {/* TOP REGISTER SECTION */}
-        <Grid container item justifyContent='flex-end' alignItems='center'>
-          <Typography className={classes.loginText} variant='body2'>Already have an account?</Typography>
-          <Button className={classes.loginBtn} onClick={() => history.push("/login")}>Login</Button>
-        </Grid>
+        <LinkToAuthSection path='login' />
         {/* FORM SECTION */}
         <Grid
           container
@@ -135,7 +110,7 @@ const Login = (props) => {
                   {formErrorMessage.confirmPassword}
                 </FormHelperText>
               </FormControl>
-              <Button type="submit" variant="contained" size="large" className={classes.createBtn}>
+              <Button color='primary' type="submit" variant="contained" size="large" className={classes.createBtn}>
                 Create
               </Button>
             </form>
@@ -159,4 +134,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
