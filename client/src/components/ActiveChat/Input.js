@@ -95,6 +95,21 @@ const Input = (props) => {
     textInput.current.click();
   };
 
+  const uploadImages = async () => {
+    const urls = await (Promise.all(files.map(async file => {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', 'chaaase');
+      data.append('cloud_name', 'chaaase');
+      const url = await fetch('https://api.cloudinary.com/v1_1/chaaase/image/upload', {
+        method: 'POST',
+        body: data
+      }).then(res => res.json().then(data => data.url));
+      return url;
+    })));
+    return urls;
+  };
+
   const removeImg = (index) => {
     const tempFilesPreview = [...filesPreview];
     const tempFiles = [...files];
