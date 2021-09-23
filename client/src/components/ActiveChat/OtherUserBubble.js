@@ -28,12 +28,22 @@ const useStyles = makeStyles(() => ({
     color: "#FFFFFF",
     letterSpacing: -0.2,
     padding: 8
+  },
+  imgContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start'
+  },
+  img: {
+    height: '100px',
+    margin: '0 3px',
+    borderRadius: '5px 5px 0 5px'
   }
 }));
 
 const OtherUserBubble = (props) => {
   const classes = useStyles();
-  const { text, time, otherUser } = props;
+  const { text, time, otherUser, attachments } = props;
   return (
     <Box className={classes.root}>
       <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>
@@ -41,9 +51,20 @@ const OtherUserBubble = (props) => {
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}
         </Typography>
+        {
+        attachments &&
+        <Box className={classes.imgContainer}>
+          {attachments.map(attachment => (
+            <img key={attachment} src={attachment} alt={attachment} className={classes.img} />
+          ))}
+        </Box>
+      }
+      {
+        text &&
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>
         </Box>
+      }
       </Box>
     </Box>
   );
