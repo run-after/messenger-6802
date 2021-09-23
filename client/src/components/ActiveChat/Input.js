@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { FormControl, FilledInput } from "@material-ui/core";
+import React, { useState, useRef } from "react";
+import { FormControl, FilledInput, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import FilterNoneOutlinedIcon from '@material-ui/icons/FilterNoneOutlined';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -12,12 +13,25 @@ const useStyles = makeStyles(() => ({
   input: {
     height: 70,
     backgroundColor: "#F4F6FA",
-    borderRadius: 8,
-    marginBottom: 20
+    borderRadius: '8px 0 0 8px',
+    marginBottom: 20,
+    width: '100%'
+  },
+  imageBtn: {
+    height: 70,
+    backgroundColor: "#F4F6FA",
+    borderRadius: '0 8px 8px 0',
+    marginBottom: 20,
+    '&:hover': {
+      background: '#bdbdbd'
+    }
   }
 }));
 
 const Input = (props) => {
+
+  const fileInput = useRef(null);
+
   const classes = useStyles();
   const [text, setText] = useState("");
   const { postMessage, otherUser, conversationId, user } = props;
@@ -39,17 +53,31 @@ const Input = (props) => {
     setText("");
   };
 
+  const handleAttach = (e) => {
+    
+  };
+
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
-        <FilledInput
-          classes={{ root: classes.input }}
-          disableUnderline
-          placeholder="Type something..."
-          value={text}
-          name="text"
-          onChange={handleChange}
-        />
+        <Grid container justifyContent='center'>
+          <Grid item xs={11}>
+            <FilledInput
+              classes={{ root: classes.input }}
+              disableUnderline
+              placeholder="Type something..."
+              value={text}
+              name="text"
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <input type='file' name='image' ref={fileInput} onChange={handleAttach} hidden />
+            <Button onClick={()=>fileInput.current.click()}className={classes.imageBtn}>
+              <FilterNoneOutlinedIcon color='disabled' />
+            </Button>
+          </Grid>
+        </Grid>
       </FormControl>
     </form>
   );
