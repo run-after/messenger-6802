@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   asideText: {
     margin: '35px 45px 0 45px',
     [theme.breakpoints.down(600)]: {
-      marginTop: '10px'
+      marginTop: theme.spacing(2)
     }
   }
 }));
