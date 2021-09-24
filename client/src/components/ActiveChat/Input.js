@@ -99,8 +99,10 @@ const Input = (props) => {
     
     // Actual files to upload
     const tempFiles = [...files];
-    tempFiles.push(e.target.files[0]);
-    setFiles(tempFiles);
+    if (e.target.files[0]) {
+      tempFiles.push(e.target.files[0]);
+      setFiles(tempFiles);  
+    };
     textInput.current.click();
   };
 
