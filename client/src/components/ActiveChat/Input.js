@@ -91,9 +91,12 @@ const Input = (props) => {
   const handleAttach = (e) => {
     // This is the preview images
     const tempPreview = [...filesPreview];
-    tempPreview.push(URL.createObjectURL(e.target.files[0]));
-    setFilesPreview(tempPreview);
-
+    const image = URL.createObjectURL(e.target.files[0]);
+    if (image) {
+      tempPreview.push(image);  
+      setFilesPreview(tempPreview);
+    };
+    
     // Actual files to upload
     const tempFiles = [...files];
     tempFiles.push(e.target.files[0]);
