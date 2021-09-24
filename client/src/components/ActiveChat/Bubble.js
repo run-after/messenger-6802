@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme, props) => ({
     alignItems: (props) => props.otherUser ? 'flex-start' : 'flex-end'
   },
   header: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: theme.spacing(1)
   },
   avatar: {
     height: 30,
@@ -19,8 +20,8 @@ const useStyles = makeStyles((theme, props) => ({
   },
   date: {
     fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
+    color: theme.typography.palette.faded,
+    fontWeight: theme.typography.fontWeightBold,
     marginBottom: theme.spacing(1)
   },
   body: {
@@ -30,7 +31,9 @@ const useStyles = makeStyles((theme, props) => ({
   },
   otherBubble: {
     backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "0 10px 10px 10px"
+    borderRadius: "0 10px 10px 10px",
+    marginLeft: theme.spacing(5),
+    marginTop: theme.spacing(-2.5)
   },
   senderBubble: {
     background: "#F4F6FA",
@@ -38,10 +41,10 @@ const useStyles = makeStyles((theme, props) => ({
   },
   text: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.2,
     padding: theme.spacing(1),
-    color: (props) => props.otherUser ? '#FFFFFF' : '#91A3C0'
+    color: (props) => props.otherUser ? theme.palette.common.white : theme.typography.palette.userText
   },
   imgContainer: {
     display: 'flex',
@@ -51,13 +54,12 @@ const useStyles = makeStyles((theme, props) => ({
   },
   img: {
     height: '100px',
-    margin: '0 3px',
     borderRadius: (props) => props.otherUser ? '5px 5px 5px 0' : '5px 5px 0 5px'
   },
   multiImgs: {
     height: '75px',
-    margin: '0 3px',
-    borderRadius: props => props.otherUser ? '5px 5px 5px 0' : '5px 5px 0 5px'
+    borderRadius: (props) => props.otherUser ? '5px 5px 5px 0' : '5px 5px 0 5px',
+    margin: theme.spacing(0, 0.25)
   }
 }));
 
