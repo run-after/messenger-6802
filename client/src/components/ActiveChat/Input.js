@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { FormControl, FilledInput, Grid, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, uploadImage } from "../../store/utils/thunkCreators";
 import FilterNoneOutlinedIcon from '@material-ui/icons/FilterNoneOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
@@ -112,11 +112,7 @@ const Input = (props) => {
       data.append('file', file);
       data.append('upload_preset', 'chaaase');
       data.append('cloud_name', 'chaaase');
-      const url = await fetch('https://api.cloudinary.com/v1_1/chaaase/image/upload', {
-        method: 'POST',
-        body: data
-      }).then(res => res.json().then(data => data.url));
-      return url;
+      return await uploadImage(data);
     })));
     return urls;
   };

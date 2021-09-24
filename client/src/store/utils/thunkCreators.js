@@ -123,3 +123,17 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const uploadImage = async (data) => {
+  try {
+    const url = await axios.post('https://api.cloudinary.com/v1_1/chaaase/image/upload', data, {
+      transformRequest: [(data, headers) => {
+        delete headers["x-access-token"]
+        return data;
+      }]
+    }).then(res => res.data.url);
+    return url;
+  } catch (error) {
+    console.error(error);
+  }
+};
