@@ -72,17 +72,17 @@ const Bubble = (props) => {
       </Box>
       <Box className={classes.body}>
         {
+          text &&
+          <Box className={otherUser ? classes.otherBubble : classes.senderBubble}>
+            <Typography className={classes.text}>{text}</Typography>            
+          </Box>
+        }
+        {
           attachments &&
           <Box className={classes.imgContainer}>
             {attachments.map(attachment => (
               <img key={attachment} src={attachment} alt={attachment} className={classes.img} />
             ))}
-          </Box>
-        }
-        {
-          text &&
-          <Box className={otherUser ? classes.otherBubble : classes.senderBubble}>
-            <Typography className={classes.text}>{text}</Typography>            
           </Box>
         }
       </Box>
