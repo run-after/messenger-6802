@@ -53,6 +53,11 @@ const useStyles = makeStyles((theme, props) => ({
     height: '100px',
     margin: '0 3px',
     borderRadius: (props) => props.otherUser ? '5px 5px 5px 0' : '5px 5px 0 5px'
+  },
+  multiImgs: {
+    height: '75px',
+    margin: '0 3px',
+    borderRadius: props => props.otherUser ? '5px 5px 5px 0' : '5px 5px 0 5px'
   }
 }));
 
@@ -81,7 +86,7 @@ const Bubble = (props) => {
           attachments &&
           <Box className={classes.imgContainer}>
             {attachments.map(attachment => (
-              <img key={attachment} src={attachment} alt={attachment} className={classes.img} />
+              <img key={attachment} src={attachment} alt={attachment} className={attachments.length > 1 ? classes.multiImgs : classes.img} />
             ))}
           </Box>
         }
