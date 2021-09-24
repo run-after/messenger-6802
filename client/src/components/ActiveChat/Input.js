@@ -139,7 +139,7 @@ const Input = (props) => {
             {
               filesPreview.map((file, index) => (
                 <Box key={file} className={classes.imgContainer}>
-                  <button type='button' className={classes.removeImgBtn} onClick={() => removeImg(index)}><DeleteForeverOutlinedIcon /></button>
+                  <Button type='button' className={classes.removeImgBtn} onClick={() => removeImg(index)}><DeleteForeverOutlinedIcon /></Button>
                   <img src={file} alt={file.name} className={classes.img} />
                 </Box>
               ))
