@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
-import { FormControl, FilledInput, Grid, Button } from "@material-ui/core";
+import { FormControl, FilledInput, Grid, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, uploadImage } from "../../store/utils/thunkCreators";
 import FilterNoneOutlinedIcon from '@material-ui/icons/FilterNoneOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,15 +26,43 @@ const useStyles = makeStyles(() => ({
     '&:hover': {
       background: '#bdbdbd'
     }
+  },
+  imgPreview: {
+    background: '#F4F6FA',
+    padding: '10px 10px 0 10px',
+    borderRadius: '8px 8px 0 0'
+  },
+  imgContainer: {
+    position: 'relative',
+    display: 'inline-block',
+    padding: '25px 10px 0 0'
+  },
+  removeImgBtn: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    background: 'none',
+    border: 'none',
+    '&:hover': {
+      cursor: 'pointer',
+      opacity: '0.5'
+    }
+  },
+  img: {
+    height: '100px',
+    borderRadius: 5,
   }
 }));
 
 const Input = (props) => {
 
   const fileInput = useRef(null);
+  const textInput = useRef(null);
 
   const classes = useStyles();
   const [text, setText] = useState("");
+  const [filesPreview, setFilesPreview] = useState([]);
+  const [files, setFiles] = useState([]);
   const { postMessage, otherUser, conversationId, user } = props;
 
   const handleChange = (event) => {
@@ -42,24 +71,77 @@ const Input = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+
+    const urls = await uploadImages();
+
+    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.   
     const reqBody = {
       text: event.target.text.value,
       recipientId: otherUser.id,
       conversationId,
-      sender: conversationId ? null : user
+      sender: conversationId ? null : user,
+      attachments: urls
     };
     await postMessage(reqBody);
     setText("");
+    setFiles([]);
+    setFilesPreview([]);
   };
 
   const handleAttach = (e) => {
+    // This is the preview images
+    const tempPreview = [...filesPreview];
+    const image = URL.createObjectURL(e.target.files[0]);
+    if (image) {
+      tempPreview.push(image);  
+      setFilesPreview(tempPreview);
+    };
     
+    // Actual files to upload
+    const tempFiles = [...files];
+    if (e.target.files[0]) {
+      tempFiles.push(e.target.files[0]);
+      setFiles(tempFiles);  
+    };
+    textInput.current.click();
   };
+
+  const uploadImages = async () => {
+    const urls = await (Promise.all(files.map(async file => {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', 'chaaase');
+      data.append('cloud_name', 'chaaase');
+      return await uploadImage(data);
+    })));
+    return urls;
+  };
+
+  const removeImg = (index) => {
+    const tempFilesPreview = [...filesPreview];
+    const tempFiles = [...files];
+    tempFilesPreview.splice(index, 1);
+    tempFiles.splice(index, 1);
+    setFilesPreview(tempFilesPreview);
+    setFiles(tempFiles);
+  }
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
+        {
+          filesPreview.length > 0 &&
+          <Grid className={classes.imgPreview}>
+            {
+              filesPreview.map((file, index) => (
+                <Box key={file} className={classes.imgContainer}>
+                  <Button type='button' className={classes.removeImgBtn} onClick={() => removeImg(index)}><DeleteForeverOutlinedIcon /></Button>
+                  <img src={file} alt={file.name} className={classes.img} />
+                </Box>
+              ))
+            }
+          </Grid>
+        }
         <Grid container justifyContent='center'>
           <Grid item xs={11}>
             <FilledInput
@@ -69,6 +151,7 @@ const Input = (props) => {
               value={text}
               name="text"
               onChange={handleChange}
+              ref={textInput}
             />
           </Grid>
           <Grid item xs={1}>

@@ -33,8 +33,6 @@ const AuthForm = (props) => {
   const { user, login, register, formType } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
-  console.log(formType);
-
   const handleRegister = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
