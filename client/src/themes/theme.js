@@ -10,6 +10,10 @@ export const theme = createMuiTheme({
       fontWeight: "bold",
       fontFamily: 'Montserrat, sans-serif',
     },
+    palette: {
+      faded: '#BECCE2',
+      userText: '#91A3C0'
+    },
     color: "#3A8DFF"
   },
   overrides: {
